@@ -1,1 +1,2 @@
-New Project
+- Line 72 is for the generate button which takes the filename and classname, i have captured these in variables from the text field and the functionb needs to be called inside at line 78.
+- Line 112 is for the run test button, i have captured how many runs the user wants in a variable. The run function should be called at line 119 and must return a arraylist of strings and put into the resultsFromTest arraylist for the list to make it appear.
