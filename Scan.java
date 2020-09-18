@@ -83,6 +83,7 @@ public class Scan {
                             
                         }
                         
+                        
                     }
                     
                     
@@ -123,6 +124,14 @@ public class Scan {
                             }
                             
                         }
+                        
+                        argCounter = 0;
+                    }
+                    
+                    if(argCounter == 0){
+                        
+                        System.out.println();
+                        dataOut.write("\n");
                         
                     }
                     

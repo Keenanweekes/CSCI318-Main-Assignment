@@ -11,19 +11,7 @@ public class main {
         Scan scan = new Scan();
         
         scan.GenCSV("test.java");   
-        
-        for(String thing : scan.getArgNames()){
-            
-            System.out.println(thing);
-            
-        }
-        
-        for(String thing2 : scan.getArgTypes()){
-            
-            System.out.println(thing2);
-            
-        }
-        
+               
     }
     
 }
