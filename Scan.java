@@ -7,6 +7,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class Scan {
@@ -28,31 +30,48 @@ public class Scan {
             String className = null;
             
             int argCounter = 0;
+            int classCounter = 0;
             
             while(myReader.hasNextLine()){
-                
+                               
                 fileData = myReader.nextLine();
-                
-                
-                
+                                               
                 if(fileData.contains("class")){
                     
-                    String classNameTemp;
-                    classNameTemp = fileData.substring(fileData.indexOf("class") + 6, fileData.length());
-                    String classNameSplit[] = classNameTemp.split("\\{");
                     
-                    className = classNameSplit[0];
+                    if(classCounter != 0){
+                        
+                        String classNameTemp;
+                        classNameTemp = fileData.substring(fileData.indexOf("class") + 6, fileData.length());
+                        String classNameSplit[] = classNameTemp.split("\\{");
                     
-                    System.out.println("Class Name: " + className);
-                    dataOut.write("Class Name: " + className + ".\n");
+                        className = classNameSplit[0];
+                    
+                        System.out.println("\nClass Name: " + className);
+                        dataOut.write("\nClass Name: " + className + ".\n");
+                        
+                        
+                    }else{
+                    
+                        String classNameTemp;
+                        classNameTemp = fileData.substring(fileData.indexOf("class") + 6, fileData.length());
+                        String classNameSplit[] = classNameTemp.split("\\{");
+                    
+                        className = classNameSplit[0];
+                    
+                        System.out.println("Class Name: " + className);
+                        dataOut.write("Class Name: " + className + ".\n");
+                    
+                    }
+                    
+                    classCounter++;
                     
                 }
+                
+             
                 
                 if(fileData.contains("private " + className + "(") || fileData.contains("private " + className + " (")){
                     
-                    System.out.println("Constructor Name: " + className);
-                    dataOut.write("Constructor Name: " + className + ".\n");
-                    
                     setConstructorName(className);
                     
                     String arguments = fileData.substring(fileData.indexOf("(") + 1, fileData.indexOf(")"));
@@ -82,19 +101,17 @@ public class Scan {
                             }
                             
                         }
-                        
+                                    
                         
                     }
                     
-                    
-                    
+                                                            
                 }
+                
+
                 
                 if(fileData.contains("public " + className + "(") || fileData.contains("public " + className + " (")){
-                    
-                    System.out.println("Constructor Name: " + className);
-                    dataOut.write("Constructor Name: " + className + ".\n");
-                    
+                                       
                     setConstructorName(className);
                     
                     String arguments = fileData.substring(fileData.indexOf("(") + 1, fileData.indexOf(")"));
@@ -124,58 +141,128 @@ public class Scan {
                             }
                             
                         }
+                                             
                         
-                        argCounter = 0;
+                        
+                    }
+                                                           
+                   
+                }
+                
+
+                
+                if(fileData.contains("protected " + className + "(") || fileData.contains("protected " + className + " (")){
+                     
+                    setConstructorName(className);
+                    
+                    String arguments = fileData.substring(fileData.indexOf("(") + 1, fileData.indexOf(")"));
+                    String argumentsSplit[] = arguments.split(" ");
+                    
+                    for(String argument : argumentsSplit){
+                        
+                        String argumentSplit[] = argument.split(",");
+                        
+                        for(String argNameType: argumentSplit){
+                                            
+                            argCounter++;
+                            
+                            if(argCounter % 2 == 0){
+                                
+                                System.out.println("Arg Name: " + argNameType);
+                                dataOut.write("Arg Name: " + argNameType + ".\n");
+                                
+                                getArgNames().add(argNameType);
+                                
+                            }else if(argCounter % 2 != 0){
+                                
+                                System.out.println("Arg Type: " + argNameType);
+                                dataOut.write("Arg Type: " + argNameType + ".\n");
+                                
+                                getArgTypes().add(argNameType);
+                            }
+                            
+                        }
+                       
+                        
+                    }
+                   
+                                       
+                }
+                
+               
+                
+                if(fileData.contains("if(") || fileData.contains("if (")){
+                    
+                      
+                    for(String argumentNames : getArgNames()){
+                        
+                        String pattern = "\\b" +argumentNames+ "\\b";
+                        Pattern p = Pattern.compile(pattern);
+                        
+                        Matcher m = p.matcher(fileData);
+                     
+                       if(m.find() == true){
+                           
+                     
+                           
+                           String checking = fileData.substring(fileData.indexOf(argumentNames) + argumentNames.length() + 1, fileData.length());
+                           
+                           if(checking.contains(">=")){
+                               
+                               String value = checking.substring(checking.indexOf(">=") + 3, checking.indexOf(")"));
+                               
+                               System.out.println(argumentNames + " compared to " + value);
+                               dataOut.write(argumentNames + " compared to " + value + "\n");
+                               
+                               
+                           }
+                           
+                           if(checking.contains("<=")){
+                               
+                               String value = checking.substring(checking.indexOf("<=") + 3, checking.indexOf(")"));
+                               
+                               System.out.println(argumentNames + " compared to " + value);
+                               dataOut.write(argumentNames + " compared to " + value + "\n");
+                           }
+                           
+                           if(checking.contains("==")){
+                               
+                               String value = checking.substring(checking.indexOf("==") + 3, checking.indexOf(")"));
+                               
+                               System.out.println(argumentNames + " compared to " + value);
+                               dataOut.write(argumentNames + " compared to " + value + "\n");
+                           }
+                           
+                           if(checking.contains("!=")){
+                               
+                               String value = checking.substring(checking.indexOf("!=") + 3, checking.indexOf(")"));
+                               
+                               System.out.println(argumentNames + " compared to " + value);
+                               dataOut.write(argumentNames + " compared to " + value + "\n");
+                           }
+                           
+                           if(checking.contains("equals(")){
+                                                            
+                               
+                               String value = checking.substring(checking.indexOf("equals("), checking.indexOf(")"));
+                               
+                               String valueEquals = value.substring(value.indexOf("\"") + 1, value.lastIndexOf("\""));
+                               
+                               System.out.println(argumentNames + " compared to " + valueEquals);
+                             
+                               dataOut.write(argumentNames + " compared to " + valueEquals + "\n");
+                           }
+                                                    
+                               
+                           
+                       
+                        
                     }
                     
-                    if(argCounter == 0){
-                        
-                        System.out.println();
-                        dataOut.write("\n");
-                        
-                    }
+                }
                     
                 }
                 
-                if(fileData.contains("protected " + className + "(") || fileData.contains("protected " + className + " (")){
-                    
-                    System.out.println("Constructor Name: " + className);
-                    dataOut.write("Constructor Name: " + className + ".\n");
-                    
-                    setConstructorName(className);
-                    
-                    String arguments = fileData.substring(fileData.indexOf("(") + 1, fileData.indexOf(")"));
-                    String argumentsSplit[] = arguments.split(" ");
-                    
-                    for(String argument : argumentsSplit){
-                        
-                        String argumentSplit[] = argument.split(",");
-                        
-                        for(String argNameType: argumentSplit){
-                                            
-                            argCounter++;
-                            
-                            if(argCounter % 2 == 0){
-                                
-                                System.out.println("Arg Name: " + argNameType);
-                                dataOut.write("Arg Name: " + argNameType + ".\n");
-                                
-                                getArgNames().add(argNameType);
-                                
-                            }else if(argCounter % 2 != 0){
-                                
-                                System.out.println("Arg Type: " + argNameType);
-                                dataOut.write("Arg Type: " + argNameType + ".\n");
-                                
-                                getArgTypes().add(argNameType);
-                            }
-                            
-                        }
-                        
-                    }
-                    
-                    
-                }
                 
                 
                 
