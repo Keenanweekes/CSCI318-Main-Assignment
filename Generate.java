@@ -31,7 +31,7 @@ public class Generate {
 	            
 	                    data = scanner.nextLine();
 	                    while (scanner.hasNextLine() && !data.equals("")) {
-	                        if (data.substring(0, 8).equals("Arg Name:")) {
+	                        if (data.substring(0, 8).equals("Arg Name")) {
 	                        	String argName = data.substring(10, data.length() - 1);
 	                        	
 	                        	argNames.add(argName);
