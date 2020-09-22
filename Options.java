@@ -20,6 +20,14 @@ public class Options {
         return name;
     }
 
+    public int argSize() {
+        return argNames.size();
+    }
+
+    public ArrayList<String> getArgs() {
+        return argNames;
+    }
+
     public Value randValues() { 
         if (this.type.substring(this.type.length() - 2, this.type.length()).equals("[]")) {
             int num = (int) Math.ceil(Math.random() * 10);
