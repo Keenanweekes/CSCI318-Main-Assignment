@@ -12,6 +12,8 @@ abstract class Value {
     }
 
     public abstract double distance(Value alt);
+
+    public abstract String toString();
 }
 
 class IntValue extends Value {
@@ -39,13 +41,17 @@ class IntValue extends Value {
         return val;
     }
 
+    @Override
+    public String toString() {
+        return name + ": " + String.valueOf(val);
+    }
 }
 
-class BoolValue extends Value {
+class BooleanValue extends Value {
 
     private boolean val;
 
-    BoolValue(String name, boolean val) {
+    BooleanValue(String name, boolean val) {
         super(name);
         this.val = val;
     }
@@ -54,7 +60,7 @@ class BoolValue extends Value {
     public double distance(Value alt) {
         boolean difference;
         try {
-            difference = val == ((BoolValue) alt).getVal();
+            difference = val == ((BooleanValue) alt).getVal();
         } catch (ClassCastException e) {
             return 10; //The types are different
         }
@@ -65,6 +71,10 @@ class BoolValue extends Value {
         return val;
     }
     
+    @Override
+    public String toString() {
+        return name + ": " + String.valueOf(val);
+    }
 }
 
 class StringValue extends Value {
@@ -109,6 +119,11 @@ class StringValue extends Value {
         );
         return 1 + min;
     }
+
+    @Override
+    public String toString() {
+        return name + ": " + val;
+    }
 }
 
 class CharValue extends Value {
@@ -136,6 +151,10 @@ class CharValue extends Value {
         return (Math.log(difference + 1) / ratio);
     }
 
+    @Override
+    public String toString() {
+        return name + ": " + String.valueOf(val);
+    }
 }
 
 class DoubleValue extends Value {
@@ -163,6 +182,10 @@ class DoubleValue extends Value {
         return val;
     }
 
+    @Override
+    public String toString() {
+        return name + ": " + String.valueOf(val);
+    }
 }
 
 class LongValue extends Value {
@@ -190,6 +213,10 @@ class LongValue extends Value {
         return val;
     }
 
+    @Override
+    public String toString() {
+        return name + ": " + String.valueOf(val);
+    }
 }
 
 class FloatValue extends Value {
@@ -217,6 +244,10 @@ class FloatValue extends Value {
         return val;
     }
 
+    @Override
+    public String toString() {
+        return name + ": " + String.valueOf(val);
+    }
 }
 
 class ShortValue extends Value {
@@ -244,6 +275,10 @@ class ShortValue extends Value {
         return val;
     }
 
+    @Override
+    public String toString() {
+        return name + ": " + String.valueOf(val);
+    }
 }
 
 class ByteValue extends Value {
@@ -270,6 +305,12 @@ class ByteValue extends Value {
     public byte getVal() {
         return val;
     }
+
+    @Override
+    public String toString() {
+        return name + ": " + String.valueOf(val);
+    }
+
 
 }
 
@@ -322,6 +363,10 @@ class ArrayValue<T extends Value> extends Value {
         return totalLength / maxLength;
     }
     
+    @Override
+    public String toString() {
+        return name + ": " + String.valueOf(val);
+    }
 }
 
 class ObjectValue extends Value {
@@ -374,5 +419,16 @@ class ObjectValue extends Value {
     
     public int size() {
         return val.size();
+    }
+
+    @Override
+    public String toString() {
+        if (val.isEmpty()) return name + ": Null";
+        String objStr = "";
+        for (Value nextVal : val) {
+            if (objStr.isEmpty()) objStr += nextVal.toString();
+            else objStr += ", " + nextVal.toString();
+        }
+        return name + ": { " + objStr + " }";
     }
 }

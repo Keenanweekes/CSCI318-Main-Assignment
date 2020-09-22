@@ -1,0 +1,17 @@
+Class Name: TestClass.
+Arg Type: int.
+Arg Name: age.
+Arg Type: String.
+Arg Name: name.
+Arg Type: double.
+Arg Name: balance.
+Arg Type: Pet.
+Arg Name: pet.
+
+Class Name: Pet.
+Arg Type: String.
+Arg Name: breed.
+Arg Type: double.
+Arg Name: weight.
+Arg Type: int[].
+Arg Name: limbSizes.
