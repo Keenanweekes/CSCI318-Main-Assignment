@@ -21,58 +21,74 @@ public class Options {
     }
 
     public Value randValues() { 
+        if (this.type.substring(this.type.length() - 2, this.type.length()).equals("[]")) {
+            int num = (int) Math.ceil(Math.random() * 10);
+            ArrayList<Value> array = new ArrayList<>();
+            String primType = this.type.substring(0, this.type.length() - 2);
+            for (int i = 0; i < num; i++) array.add(createPrim(primType));
+            switch(primType) {
+                case "int": return new ArrayValue<IntValue>(name, array.toArray(new IntValue[0]));
+                case "boolean": return new ArrayValue<BooleanValue>(name, array.toArray(new BooleanValue[0]));
+                case "String": return new ArrayValue<StringValue>(name, array.toArray(new StringValue[0]));
+                case "char": return new ArrayValue<CharValue>(name, array.toArray(new CharValue[0]));
+                case "double": return new ArrayValue<DoubleValue>(name, array.toArray(new DoubleValue[0]));
+                case "long": return new ArrayValue<LongValue>(name, array.toArray(new LongValue[0]));
+                case "float": return new ArrayValue<FloatValue>(name, array.toArray(new FloatValue[0]));
+                case "short": return new ArrayValue<ShortValue>(name, array.toArray(new ShortValue[0]));
+                case "byte": return new ArrayValue<ByteValue>(name, array.toArray(new ByteValue[0]));
+                default: return null;
+            }
+        }
+        else return createPrim(this.type);
+    }
+
+    private Value createPrim(String type) {
         Random rand = new Random();   
-        switch(this.type) {
-            case "IntValue": // max neg int to max int
-                IntValue intValue = new IntValue(argNames.get(0), ThreadLocalRandom.current().nextInt());
+        switch(type) {
+            case "int": // max neg int to max int
+                IntValue intValue = new IntValue(name, ThreadLocalRandom.current().nextInt());
                 return intValue;
                 
-            case "BoolValue": // random true or false
-                BoolValue boolValue = new BoolValue(argNames.get(0), ThreadLocalRandom.current().nextBoolean());
+            case "boolean": // random true or false
+                BooleanValue boolValue = new BooleanValue(name, ThreadLocalRandom.current().nextBoolean());
                 return boolValue;
                 
-            case "StringValue": // length 0 to 10 letters a - z
+            case "String": // length 0 to 10 letters a - z
                 String word = "";
                 int wordSize = ThreadLocalRandom.current().nextInt(0, 11);
                 for (int i = 0; i < wordSize; i++) {
                     word = word + (char)ThreadLocalRandom.current().nextInt(97, 122);
                 }
-                StringValue stringValue = new StringValue(argNames.get(0), word);
+                StringValue stringValue = new StringValue(name, word);
                 return stringValue;
                 
-            case "CharValue": // char a - z
+            case "char": // char a - z
                 char character = (char)ThreadLocalRandom.current().nextInt(97, 122);
-                CharValue charValue = new CharValue(argNames.get(0), character);
+                CharValue charValue = new CharValue(name, character);
                 return charValue;
                 
-            case "DoubleValue": // double between 0 and 1
-                DoubleValue doubleValue = new DoubleValue(argNames.get(0), ThreadLocalRandom.current().nextDouble());
+            case "double": // double between 0 and 1
+                DoubleValue doubleValue = new DoubleValue(name, ThreadLocalRandom.current().nextDouble());
                 return doubleValue;
                 
-            case "LongValue": // max neg long to max long
-                LongValue longValue = new LongValue(argNames.get(0), ThreadLocalRandom.current().nextLong());
+            case "long": // max neg long to max long
+                LongValue longValue = new LongValue(name, ThreadLocalRandom.current().nextLong());
                 return longValue;
                 
-            case "FloatValue": // float between 0 and 1
-                FloatValue floatValue = new FloatValue(argNames.get(0), ThreadLocalRandom.current().nextFloat());
+            case "float": // float between 0 and 1
+                FloatValue floatValue = new FloatValue(name, ThreadLocalRandom.current().nextFloat());
                 return floatValue;
                 
-            case "ShortValue": // max neg short to max short
-                ShortValue shortValue = new ShortValue(argNames.get(0), (short)(rand.nextInt(Short.MAX_VALUE + Short.MAX_VALUE) - Short.MAX_VALUE));
+            case "short": // max neg short to max short
+                ShortValue shortValue = new ShortValue(name, (short)(rand.nextInt(Short.MAX_VALUE + Short.MAX_VALUE) - Short.MAX_VALUE));
                 return shortValue;
                 
-            case "ByteValue": // max neg byte to max short
-//                ByteValue byteValue = new ByteValue(argNames.get(0), (byte)(rand.nextInt(Byte.MAX_VALUE + Byte.MAX_VALUE) - Byte.MAX_VALUE));
-//                return byteValue;
-               
-            case "ArrayValue":
-
-                break;
-           
+            case "byte": // max neg byte to max short
+                ByteValue byteValue = new ByteValue(name, (byte)(rand.nextInt(Byte.MAX_VALUE + Byte.MAX_VALUE) - Byte.MAX_VALUE));
+                return byteValue;       
+                
+            default:
+                return null;
         }
- 
-        IntValue value = new IntValue("test", 5);
-        return value; 
-        
     }
 }
