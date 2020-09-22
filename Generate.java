@@ -17,7 +17,7 @@ public class Generate {
 		String type = null;
 		ArrayList<String> argNames = new ArrayList<>();
 	
-		try  {
+		try {
 			 Scanner scanner = new Scanner(new File("data.txt"));
 	            
 	            while (scanner.hasNextLine()) {
@@ -29,19 +29,23 @@ public class Generate {
 	                
 	                    data = scanner.nextLine();
 	                    while (scanner.hasNextLine() && !data.equals("")) {
-	                        if (data.substring(0, 8).equals("Arg Name")) {
+	                        if (data.substring(0, 8).equals("Arg Name:")) {
 	                        	argNames.add(data.substring(10, data.length() - 1));
 	                        	data = scanner.nextLine();
 	                        }
-	                        if (data.substring(0, 8).equals("Arg Type")) 
+	                        if (data.substring(0, 8).equals("Arg Type:")) 
 	                        	type = data.substring(10, data.length() - 1);
 	                        	data = scanner.nextLine();
 	                        }
 	                    }
-	                Options option = new Options(className, type, argNames);
-	                options.put(className, option);
-	                System.out.println(option.toString());
+	                
+	                if(className != null && type != null && argNames != null) {
+	                	Options option = new Options(className, type, argNames);
+	                	options.put(className, option);
+	                	System.out.println(options.get("Hello").getName());
+	                }
 	            }
+	            
 	            
 	            scanner.close();
 
@@ -52,6 +56,9 @@ public class Generate {
 	            e.printStackTrace();
 	        }
 	}
+	
+	
+	
 	
 }
 	
