@@ -1,6 +1,4 @@
 
-package readjavafile;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -35,31 +33,29 @@ public class Scan {
             while(myReader.hasNextLine()){
                                
                 fileData = myReader.nextLine();
-                                               
-                if(fileData.contains("class")){
+                String classStr = "class";
+
+                if(fileData.contains(classStr)){
                     
                     
                     if(classCounter != 0){
                         
                         String classNameTemp;
-                        classNameTemp = fileData.substring(fileData.indexOf("class") + 6, fileData.length());
+                        classNameTemp = fileData.substring(fileData.indexOf(classStr) + 6, fileData.length());
                         String classNameSplit[] = classNameTemp.split("\\{");
                     
                         className = classNameSplit[0];
-                    
-                        System.out.println("\nClass Name: " + className);
+
                         dataOut.write("\nClass Name: " + className + ".\n");
                         
-                        
-                    }else{
+                    } else {
                     
                         String classNameTemp;
-                        classNameTemp = fileData.substring(fileData.indexOf("class") + 6, fileData.length());
+                        classNameTemp = fileData.substring(fileData.indexOf(classStr) + 6, fileData.length());
                         String classNameSplit[] = classNameTemp.split("\\{");
                     
                         className = classNameSplit[0];
                     
-                        System.out.println("Class Name: " + className);
                         dataOut.write("Class Name: " + className + ".\n");
                     
                     }
@@ -67,9 +63,7 @@ public class Scan {
                     classCounter++;
                     
                 }
-                
-             
-                
+
                 if(fileData.contains("private " + className + "(") || fileData.contains("private " + className + " (")){
                     
                     setConstructorName(className);
@@ -87,28 +81,19 @@ public class Scan {
                             
                             if(argCounter % 2 == 0){
                                 
-                                System.out.println("Arg Name: " + argNameType);
                                 dataOut.write("Arg Name: " + argNameType + ".\n");
                                 
                                 getArgNames().add(argNameType);
                                 
                             }else if(argCounter % 2 != 0){
                                 
-                                System.out.println("Arg Type: " + argNameType);
                                 dataOut.write("Arg Type: " + argNameType + ".\n");
                                 
                                 getArgTypes().add(argNameType);
                             }
-                            
                         }
-                                    
-                        
-                    }
-                    
-                                                            
+                    }                                  
                 }
-                
-
                 
                 if(fileData.contains("public " + className + "(") || fileData.contains("public " + className + " (")){
                                        
@@ -125,31 +110,21 @@ public class Scan {
                                             
                             argCounter++;
                             
-                            if(argCounter % 2 == 0){
-                                
-                                System.out.println("Arg Name: " + argNameType);
+                            if(argCounter % 2 == 0) {
+
                                 dataOut.write("Arg Name: " + argNameType + ".\n");
                                 
                                 getArgNames().add(argNameType);
                                 
-                            }else if(argCounter % 2 != 0){
-                                
-                                System.out.println("Arg Type: " + argNameType);
+                            } else if(argCounter % 2 != 0) {
+
                                 dataOut.write("Arg Type: " + argNameType + ".\n");
                                 
                                 getArgTypes().add(argNameType);
                             }
-                            
                         }
-                                             
-                        
-                        
                     }
-                                                           
-                   
                 }
-                
-
                 
                 if(fileData.contains("protected " + className + "(") || fileData.contains("protected " + className + " (")){
                      
@@ -166,112 +141,70 @@ public class Scan {
                                             
                             argCounter++;
                             
-                            if(argCounter % 2 == 0){
+                            if(argCounter % 2 == 0) {
                                 
-                                System.out.println("Arg Name: " + argNameType);
                                 dataOut.write("Arg Name: " + argNameType + ".\n");
                                 
                                 getArgNames().add(argNameType);
                                 
-                            }else if(argCounter % 2 != 0){
+                            } else if(argCounter % 2 != 0) {
                                 
-                                System.out.println("Arg Type: " + argNameType);
                                 dataOut.write("Arg Type: " + argNameType + ".\n");
                                 
                                 getArgTypes().add(argNameType);
                             }
-                            
                         }
-                       
-                        
-                    }
-                   
-                                       
+                    }              
                 }
                 
-               
-                
                 if(fileData.contains("if(") || fileData.contains("if (")){
-                    
-                      
                     for(String argumentNames : getArgNames()){
                         
                         String pattern = "\\b" +argumentNames+ "\\b";
                         Pattern p = Pattern.compile(pattern);
                         
                         Matcher m = p.matcher(fileData);
-                     
-                       if(m.find() == true){
-                           
-                     
-                           
-                           String checking = fileData.substring(fileData.indexOf(argumentNames) + argumentNames.length() + 1, fileData.length());
-                           
-                           if(checking.contains(">=")){
-                               
-                               String value = checking.substring(checking.indexOf(">=") + 3, checking.indexOf(")"));
-                               
-                               System.out.println(argumentNames + " compared to " + value);
-                               dataOut.write(argumentNames + " compared to " + value + "\n");
-                               
-                               
-                           }
-                           
-                           if(checking.contains("<=")){
-                               
-                               String value = checking.substring(checking.indexOf("<=") + 3, checking.indexOf(")"));
-                               
-                               System.out.println(argumentNames + " compared to " + value);
-                               dataOut.write(argumentNames + " compared to " + value + "\n");
-                           }
-                           
-                           if(checking.contains("==")){
-                               
-                               String value = checking.substring(checking.indexOf("==") + 3, checking.indexOf(")"));
-                               
-                               System.out.println(argumentNames + " compared to " + value);
-                               dataOut.write(argumentNames + " compared to " + value + "\n");
-                           }
-                           
-                           if(checking.contains("!=")){
-                               
-                               String value = checking.substring(checking.indexOf("!=") + 3, checking.indexOf(")"));
-                               
-                               System.out.println(argumentNames + " compared to " + value);
-                               dataOut.write(argumentNames + " compared to " + value + "\n");
-                           }
-                           
-                           if(checking.contains("equals(")){
-                                                            
-                               
-                               String value = checking.substring(checking.indexOf("equals("), checking.indexOf(")"));
-                               
-                               String valueEquals = value.substring(value.indexOf("\"") + 1, value.lastIndexOf("\""));
-                               
-                               System.out.println(argumentNames + " compared to " + valueEquals);
-                             
-                               dataOut.write(argumentNames + " compared to " + valueEquals + "\n");
-                           }
-                                                    
-                               
-                           
-                       
                         
+                        if(m.find() == true){
+                            String checking = fileData.substring(fileData.indexOf(argumentNames) + argumentNames.length() + 1, fileData.length());
+                            String comp = " compared to ";
+
+                                if(checking.contains(">=")) {
+                                    String value = checking.substring(checking.indexOf(">=") + 3, checking.indexOf(")"));
+                                    
+                                    dataOut.write(argumentNames + comp + value + "\n");
+                                }
+                            
+                                if(checking.contains("<=")){
+                                    String value = checking.substring(checking.indexOf("<=") + 3, checking.indexOf(")"));
+                                    
+                                    dataOut.write(argumentNames + comp + value + "\n");
+                                }
+                            
+                            if(checking.contains("==")){
+                                String value = checking.substring(checking.indexOf("==") + 3, checking.indexOf(")"));
+                                
+                                dataOut.write(argumentNames + comp + value + "\n");
+                            }
+                            
+                            if(checking.contains("!=")){
+                                String value = checking.substring(checking.indexOf("!=") + 3, checking.indexOf(")"));
+                                
+                                dataOut.write(argumentNames + comp + value + "\n");
+                            }
+                            
+                            if(checking.contains("equals(")){
+                                String value = checking.substring(checking.indexOf("equals("), checking.indexOf(")"));
+                                
+                                String valueEquals = value.substring(value.indexOf("\"") + 1, value.lastIndexOf("\""));
+                                
+                                dataOut.write(argumentNames + comp + valueEquals + "\n");
+                            }
+                        }
                     }
-                    
                 }
-                    
-                }
-                
-                
-                
-                
             }
-            
-            dataOut.close();
-   
-           
-        
+            dataOut.close(); 
     }
 
     public ArrayList<String> getArgNames() {
@@ -285,16 +218,8 @@ public class Scan {
     public ArrayList<String> getArgTypes() {
         return argTypes;
     }
-    
-    
 
     public void setConstructorName(String constructorName) {
         this.constructorName = constructorName;
-    }
-
-    
-    
-    
-    
-    
+    } 
 }
