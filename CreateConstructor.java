@@ -12,7 +12,7 @@ class CreateConstructor {
     public void create(String mainObj) {
         try (
             Scanner scanner = new Scanner(new File("data.txt"));
-            FileWriter writer = new FileWriter("generate.java", false);
+            FileWriter writer = new FileWriter("Generateclass.java", false);
         ) {
             writer.append("class GenerateClass {\nstatic public String generate(ObjectValue val) {\n");
             writer.append("String success = \"Success\";\ntry {\ngen" + mainObj + "(val);\n} catch (Exception e) {\n");

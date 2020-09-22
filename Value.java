@@ -13,7 +13,7 @@ abstract class Value {
 
     public abstract double distance(Value alt);
 
-    public abstract String toString();
+    public abstract String getString();
 }
 
 class IntValue extends Value {
@@ -42,7 +42,7 @@ class IntValue extends Value {
     }
 
     @Override
-    public String toString() {
+    public String getString() {
         return name + ": " + String.valueOf(val);
     }
 }
@@ -72,7 +72,7 @@ class BooleanValue extends Value {
     }
     
     @Override
-    public String toString() {
+    public String getString() {
         return name + ": " + String.valueOf(val);
     }
 }
@@ -121,7 +121,7 @@ class StringValue extends Value {
     }
 
     @Override
-    public String toString() {
+    public String getString() {
         return name + ": " + val;
     }
 }
@@ -152,7 +152,7 @@ class CharValue extends Value {
     }
 
     @Override
-    public String toString() {
+    public String getString() {
         return name + ": " + String.valueOf(val);
     }
 }
@@ -183,7 +183,7 @@ class DoubleValue extends Value {
     }
 
     @Override
-    public String toString() {
+    public String getString() {
         return name + ": " + String.valueOf(val);
     }
 }
@@ -214,7 +214,7 @@ class LongValue extends Value {
     }
 
     @Override
-    public String toString() {
+    public String getString() {
         return name + ": " + String.valueOf(val);
     }
 }
@@ -245,7 +245,7 @@ class FloatValue extends Value {
     }
 
     @Override
-    public String toString() {
+    public String getString() {
         return name + ": " + String.valueOf(val);
     }
 }
@@ -276,7 +276,7 @@ class ShortValue extends Value {
     }
 
     @Override
-    public String toString() {
+    public String getString() {
         return name + ": " + String.valueOf(val);
     }
 }
@@ -307,7 +307,7 @@ class ByteValue extends Value {
     }
 
     @Override
-    public String toString() {
+    public String getString() {
         return name + ": " + String.valueOf(val);
     }
 
@@ -364,7 +364,7 @@ class ArrayValue<T extends Value> extends Value {
     }
     
     @Override
-    public String toString() {
+    public String getString() {
         return name + ": " + String.valueOf(val);
     }
 }
@@ -422,12 +422,12 @@ class ObjectValue extends Value {
     }
 
     @Override
-    public String toString() {
+    public String getString() {
         if (val.isEmpty()) return name + ": Null";
         String objStr = "";
         for (Value nextVal : val) {
-            if (objStr.isEmpty()) objStr += nextVal.toString();
-            else objStr += ", " + nextVal.toString();
+            if (objStr.isEmpty()) objStr += nextVal.getString();
+            else objStr += ", " + nextVal.getString();
         }
         return name + ": { " + objStr + " }";
     }

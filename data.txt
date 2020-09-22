@@ -1,17 +1,13 @@
-Class Name: TestClass.
+Class Name: Hello.
 Arg Type: int.
-Arg Name: age.
+Arg Name: number.
 Arg Type: String.
 Arg Name: name.
-Arg Type: double.
-Arg Name: balance.
-Arg Type: Pet.
-Arg Name: pet.
+number compared to 0
 
-Class Name: Pet.
+Class Name: Thing.
+Arg Type: int.
+Arg Name: number2.
 Arg Type: String.
-Arg Name: breed.
-Arg Type: double.
-Arg Name: weight.
-Arg Type: int[].
-Arg Name: limbSizes.
+Arg Name: name2.
+name2 compared to Steve
