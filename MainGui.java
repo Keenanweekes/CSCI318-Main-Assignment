@@ -1,5 +1,3 @@
-package art;
-
 import java.awt.ComponentOrientation;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
