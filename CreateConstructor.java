@@ -46,7 +46,7 @@ class CreateConstructor {
     }
 
     private String createObj(String[] argTypes, String className) {
-        String returnString = "static private " + className + " gen" + className + "(ObjectValue val) {\n";
+        String returnString = "static private " + className + " gen" + className + "(ObjectValue val) throws Exception {\n";
         for (int i = 0; i < argTypes.length; i++) {
             returnString += convertVar(argTypes[i], i) + "\n";
         }
