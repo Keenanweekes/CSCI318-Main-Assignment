@@ -28,6 +28,10 @@ public class Options {
         return argNames;
     }
 
+    public String getType() {
+        return type;
+    }
+
     public Value randValues() { 
         if (this.type.substring(this.type.length() - 2, this.type.length()).equals("[]")) {
             int num = (int) Math.ceil(Math.random() * 10);

@@ -67,7 +67,11 @@ public class Generate {
 	private Value genObject(String argName) {
 		
 		Options opt = options.get(argName);
-		
+
+        if (options.containsKey(opt.getType())) {
+            return genObject(opt.getType());
+        }
+
 		if(opt.argSize() != 0) {
 			ArrayList<Value> values = new ArrayList<Value>();
 			ArrayList<String> argNames = opt.getArgs();
@@ -76,7 +80,7 @@ public class Generate {
 				Value param = genObject(an);
 				values.add(param);
 			}
-			
+
 			return new ObjectValue(argName, values);
 			
 		} else {
