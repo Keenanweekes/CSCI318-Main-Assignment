@@ -20,32 +20,32 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
-public class MainGUI {
+public class MainGui {
     private JFrame jFrame = new JFrame();
     private JPanel mainPanel = new JPanel();
     private JPanel filePanel = new JPanel();
     private JPanel runsPanel = new JPanel();
     private JPanel resultsPanel = new JPanel();
-    
+
     private JLabel fileLabel;
     private JLabel classLabel;
     private JLabel runsLabel;
     private JLabel valuesLabel;
     private JLabel resultsLabel;
-    
+
     private JTextField fileField;
     private JTextField classField;
     private JTextField runsField;
-    
+
     private JButton generateButton;
     private JButton runsButton;
-    
+
     private JList resultsList;
-    
+
     private JScrollPane listScroller;
     ArrayList<String> resultsFromTest = new ArrayList<>();
 
-    MainGUI()
+    MainGui()
     {
         jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jFrame.setVisible(true);

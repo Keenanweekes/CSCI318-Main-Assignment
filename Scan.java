@@ -32,6 +32,7 @@ public class Scan {
 
             fileData = myReader.nextLine();
             String classStr = "class";
+            if (fileData.contains("abstract")) continue;
 
             if (fileData.contains(classStr)) {
 
@@ -42,7 +43,7 @@ public class Scan {
                     String classNameSplit[] = classNameTemp.split("\\{");
 
                     className = classNameSplit[0];
-                    className = className.replaceAll("\\s+", "");
+                    className = className.split(" ")[0];
 
                     dataOut.write("\nClass Name: " + className + ".\n");
 
@@ -53,7 +54,7 @@ public class Scan {
                     String classNameSplit[] = classNameTemp.split("\\{");
 
                     className = classNameSplit[0];
-                    className = className.replaceAll("\\s+", "");
+                    className = className.split(" ")[0];
 
                     dataOut.write("Class Name: " + className + ".\n");
 

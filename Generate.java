@@ -68,14 +68,30 @@ public class Generate {
 		
 		Options opt = options.get(argName);
 
-        if (options.containsKey(opt.getType())) {
+        //Gets straight type
+        String type = opt.getType().indexOf("]") == opt.getType().length() - 1
+        ? opt.getType().substring(0, opt.getType().length() - 2)
+        : opt.getType();
+        
+        //Checks if the type is a create class
+        if (options.containsKey(type)) {
+            //If class type is an array
+            if (opt.getType().indexOf("]") == opt.getType().length() - 1) {
+                int num = (int) Math.ceil(Math.random() * 10);
+                ArrayList<ObjectValue> array = new ArrayList<>();
+                for (int i = 0; i < num; i++) array.add((ObjectValue)genObject(type));
+                return new ArrayValue<ObjectValue>(argName, array.toArray(new ObjectValue[0]));
+            }
+            //Type is not an array
             return genObject(opt.getType());
         }
 
+        //Check if the option has arguments and if so treats as an object
 		if(opt.argSize() != 0) {
 			ArrayList<Value> values = new ArrayList<Value>();
 			ArrayList<String> argNames = opt.getArgs();
-			
+            
+            //Treats it as part of its arguments
 			for(String an : argNames) {
 				Value param = genObject(an);
 				values.add(param);
@@ -84,7 +100,8 @@ public class Generate {
 			return new ObjectValue(argName, values);
 			
 		} else {
-			
+            
+            //Primitive like argument, therefore can generate basic value
 			return opt.randValues();
 			
 		}

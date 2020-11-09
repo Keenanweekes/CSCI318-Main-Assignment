@@ -1,4 +1,7 @@
-import java.util.ArrayList;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.HashMap;
 
 public class generateMain {
     public static void main(String[] args) {
